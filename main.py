@@ -7,7 +7,7 @@ from sqlalchemy import create_engine
 class ETL_gsheet:
     def __init__(self):
         self.sheet = "https://docs.google.com/spreadsheets/d/1nRteMJI2lE05AFs4fSTxEvCXnbRLo1dmNjC1xC0IuZU/edit#gid=910743533"
-        self.mysql_password = 'gammoury16R!'
+        self.mysql_password = 'sssss'
         self.network_daily_user = [] # the daily active user networks
         self.sub_df = []  # Subscription started
         self.inst_df = []  # installs
