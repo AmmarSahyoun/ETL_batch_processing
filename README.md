@@ -1,30 +1,61 @@
-# ETL Data Engineering by GCP_API
+# ETL Data Engineer Workflow
+ This Python application automates one of data engineer tasks. It extracts data from Excel spreadsheets, performs transformations and calculations to generate new business metrics, stores the processed data in a MySQL database, and creates data visualizations to facilitate business insights. This can be valuable for various departments within an organization to analyze their data and make data-driven decisions.
 
-### Features
-#### The goal of this ETL project is to:
-- Extract data from a google sheet.
-- Transform and aggregate the data to create new metrics.
-- Visualize and store the metrics into MySQL.
+## Additional Considerations:
+- The application's functionality can be modified to aligns with the complexity of your ETL job requirements.
+- While this application currently doesn't handle personal sensitive information, it's important to prioritize security  considering PII's Encryption for any sensitive data you might use in the future.
+- The application is designed to handle growing data volumes. Additionally, the calculated metrics can be seamlessly integrated and migrated to any public cloud provider.
 
 
-The data in the google sheet is marketing reporting data for the first half-yearly 2020
+## business goals:
+- The main goal here is to bring in new customers and increase a company’s customer base.
+- Create loyalty programs that will make customers stay longer and even refer family and friends. 
 
+### The excel sheet example in a mobile-app reporting data for the first half-yearly 2020
 
 
 #### The processing application basically fetches the data and calculate two metrics:
 - The network that usually has the most active users on a daily basis.
 - The network that has the best “Installs” to “Subscription started” conversion rate.
 
+'''
+### Useful docker commands:
+--Rebuild and Run Your Docker-compose Setup
+docker-compose up --build
 
-### Tech
-To run this app you need to create your own credentials for:
-- Google sheet API key [API Quick Start](https://developers.google.com/drive/api/v3/enable-drive-api)
-- MySQL database [MySQL Quick Start](https://dev.mysql.com/doc/mysql-getting-started/en/)
+--List all images
+docker images
+--Remove specific image
+docker rmi <image_id>
+--Force delete all images:
+docker rmi -f $(docker images -aq)
+
+--List all containers
+docker ps -a
+--Remove specific container
+docker rm <container_id>
+
+--Stop and Clean existing Docker resources:
+docker-compose down
+docker volume prune -f
+docker network prune -f
+docker image prune -f
+
+--Stop Services Temporarily
+docker-compose down
+
+--Restart Docker Service:
+sudo systemctl restart docker
+
+'''
 
 
-### locally Installation
+### Verifying the two Metrics inside mysql-container
+The two metrics should now be stored in the MySQL database marketing_db withtin mysql container.
+To verify use these commands to connect and query the tabels:
 
-- Install the dependencies in requirements.txt
-- Add your own google API key in the project root
-- In the source code add your google sheet link
-- In the source code add your own MySQL password
+docker exec -it <mysql_container_name> mysql -uroot -prootpassword
+use marketing_db;
+show tables;
+select date_dt, network, MAX(max_dau) AS max_dau from most_active_networks;
+select date_dt, network, MAX(conversion_rate) AS best_rate from best_conversion_network;
