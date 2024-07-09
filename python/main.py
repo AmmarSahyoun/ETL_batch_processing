@@ -5,25 +5,33 @@ import mysql.connector
 from sqlalchemy import create_engine
 
 
-def etl(excel_file):
-    df = pd.read_excel(excel_file)
+def etl(data):
+    if isinstance(data, str):
+        df = pd.read_excel(data)
+    elif isinstance(data, pd.DataFrame): # for test purposes
+        df = data
+    else:
+        raise ValueError("Invalid input type. Expected excel file path.")
     
     # Calculate two metrics
     max_dau_by_network = df.groupby(['Date', 'Network'])['Daily Active Users'].max().reset_index(name='max_dau')
     most_active_networks = (
         max_dau_by_network.sort_values(by='max_dau', ascending=False).groupby('Date').head(1).sort_values(by='Date', ascending=True)
             )
+    most_active_networks = most_active_networks.rename(columns={'Date': 'date_dt'})
  
     conversion_rates = df.groupby(["Date", "Network"]).agg(conversion_rate=("Subscription started", lambda x: x.mean() / df["Installs"].mean())).reset_index()
     best_conversion_network = (
         conversion_rates.sort_values(by='conversion_rate', ascending=False).groupby('Date').head(1).sort_values(by='Date', ascending=True)
             )
+    best_conversion_network = best_conversion_network.rename(columns={'Date': 'date_dt'})
+    
     print('2 Metrics have been calculate!')
     return most_active_networks, best_conversion_network
 
 def create_plots(most_active_networks, best_conversion_network):
-    fig1 = px.line(most_active_networks, x='Date', y='max_dau', color='Network', markers=True, width=1200, height=600)
-    fig2 = px.line(best_conversion_network, x='Date', y='conversion_rate', color='Network', markers=True, width=1200, height=600)
+    fig1 = px.line(most_active_networks, x='date_dt', y='max_dau', color='Network', markers=True, width=1200, height=600)
+    fig2 = px.line(best_conversion_network, x='date_dt', y='conversion_rate', color='Network', markers=True, width=1200, height=600)
     print('Creating diagrams!')
     return fig1, fig2
 
