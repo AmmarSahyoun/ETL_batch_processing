@@ -9,23 +9,30 @@
 
 ## Business goals:
 
-> #### The main goal here is to bring in new customers and increase a company’s customer base.
+> ` The main goal here is to bring in new customers and increase a company’s customer base.`
 
-> #### Create loyalty programs that will make customers stay longer and even refer family and friends.
+> ` Create loyalty programs that will make customers stay longer and even refer family and friends.`
 
 
 ## Project Structure
 ```
-ETL-challenge/
-├── docker-compose.yml
-└── python/
-    ├── Dockerfile
-    ├── main.py
-    ├── appMarketing.xlsx
-    └── requirements.txt
-└── mysql/
-    ├── Dockerfile
-    └── marketing_db.sql
+ETL-batch_processing/
+│
+├── python/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── requirements.txt
+│   ├── appMarketing.xlsx
+│   └── Dockerfile 
+│
+├── mysql/
+│   ├── Dockerfile
+│   └── marketing_db.sql
+│
+├── tests/
+│   └── test_etl.py
+│
+└── docker-compose.yml
 ```
 
 #### The processing application basically fetches the data and calculate two metrics:
@@ -67,6 +74,13 @@ ETL-challenge/
     ` sudo systemctl restart docker `
 
 
+### Unit Tests for ETL Function with 'Valid Data' and 'Invalid Data'
+
+     export PYTHONPATH=$(pwd)  
+
+     pytest tests/  
+
+
 ### Verifying the two Metrics inside mysql-container
 The two metrics should now be stored in the MySQL database marketing_db withtin mysql container. To verify use these commands to connect and query the tabels:
 
@@ -79,8 +93,8 @@ The two metrics should now be stored in the MySQL database marketing_db withtin 
 ```sql
 use marketing_db;
 show tables;
-select date, network, max(max_dau) as max_dau from most_active_networks group by date, network;
-select date, max(conversion_rate) as best_rate from best_conversion_network group by date;
+select date_dt, network, max(max_dau) as max_dau from most_active_networks group by date_dt, network;
+select date_dt, max(conversion_rate) as best_rate from best_conversion_network group by date_dt;
 ```
 
 ![charts](Metrics.png)
