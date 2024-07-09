@@ -80,4 +80,4 @@ select date, network, max(max_dau) as max_dau from most_active_networks group by
 select date, max(conversion_rate) as best_rate from best_conversion_network group by date;
 ```
 
-![charts](/home/ammar/projects/ETL_challenge/metrics.png)
+![charts](metrics.png)
