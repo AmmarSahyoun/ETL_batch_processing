@@ -4,12 +4,15 @@
 
 ## Additional Considerations:
 - The application's functionality can be modified to aligns with the complexity of your ETL job requirements.
-- While this application currently doesn't handle personal sensitive information, it's important to prioritize security considering ** PII's Encryption ** for any sensitive data you might use in the future.
-- The application is designed to handle growing data volumes. Additionally, the calculated metrics can be seamlessly  ** integrated ** and migrated to any public cloud provider.
+- While this application currently doesn't handle personal sensitive information, it's important to prioritize security considering **PII's Encryption** for any sensitive data you might use in the future.
+- The application is designed to handle growing data volumes. Additionally, the calculated metrics can be seamlessly **integrated** and migrated to any public cloud provider.
 
 ## Business goals:
-- The main goal here is to bring in new customers and increase a company’s customer base.
-- Create loyalty programs that will make customers stay longer and even refer family and friends. 
+
+> #### The main goal here is to bring in new customers and increase a company’s customer base.
+
+> #### Create loyalty programs that will make customers stay longer and even refer family and friends.
+
 
 ## Project Structure
 ```
@@ -80,4 +83,4 @@ select date, network, max(max_dau) as max_dau from most_active_networks group by
 select date, max(conversion_rate) as best_rate from best_conversion_network group by date;
 ```
 
-![charts](metrics.png)
+![charts](Metrics.png)
