@@ -21,20 +21,17 @@ def etl(excel_file):
     print('2 Metrics have been calculate!')
     return most_active_networks, best_conversion_network
 
-
 def create_plots(most_active_networks, best_conversion_network):
     fig1 = px.line(most_active_networks, x='Date', y='max_dau', color='Network', markers=True, width=1200, height=600)
     fig2 = px.line(best_conversion_network, x='Date', y='conversion_rate', color='Network', markers=True, width=1200, height=600)
     print('Creating diagrams!')
     return fig1, fig2
 
-
 def load_to_db(most_active_networks, best_conversion_network):
     engine = create_engine('mysql+mysqlconnector://root:rootpassword@mysql:3306/marketing_db')
     most_active_networks.to_sql('most_active_networks', engine, if_exists='replace', index=False)
     best_conversion_network.to_sql('best_conversion_network', engine, if_exists='replace', index=False)
-    print('Metrics have been stored in the database!')
-       
+    print('Metrics have been stored in the database!')    
 
 def main():
     excel_file = 'appMarketing.xlsx'
@@ -43,7 +40,7 @@ def main():
     load_to_db(most_active_networks, best_conversion_network)
     fig1, fig2 = create_plots(most_active_networks, best_conversion_network)
 
-
+    print('Creating Dashboard')
     app = Dash(__name__)
     app.layout = html.Div(
         children=[
