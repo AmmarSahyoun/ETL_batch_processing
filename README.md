@@ -1,4 +1,4 @@
-# ETL Data Engineer Workflow
+# ETL Data batch processing
  This Python application automates one of data engineer tasks. It extracts data from Excel spreadsheets that holds mobile-app reporting data for the first half-year 2020. 
  Performs transformations and calculations to generate new business metrics, stores the processed data in a MySQL database, and creates data visualizations to facilitate business insights. This can be valuable for various departments within an organization to analyze their data and make data-driven decisions.
 
