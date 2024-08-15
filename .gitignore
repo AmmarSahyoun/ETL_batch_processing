@@ -19,7 +19,7 @@ __pycache__/
 env/
 venv/
 ENV/
-
+.pytest_cache/
 # Unit test reports
 TEST*.xml
 
